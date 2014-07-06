@@ -18,4 +18,5 @@ factors 1 = []
 factors n = let p = ld n
                   in p : factors (n `div` p)
 
+main :: IO ()
 main = print . maximum . factors $ 600851475143

@@ -9,4 +9,5 @@ isPal n = n == (read . reverse . show $ n :: Integer)
 max' :: [Integer] -> Integer
 max' r = maximum . filter isPal . liftA2 (*) r $ r
 
+main :: IO ()
 main = print . max' $ [900..999]  -- no need to do lower combinations
