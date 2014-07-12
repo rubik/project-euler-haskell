@@ -7,7 +7,7 @@ encode :: (Eq a) => [a] -> [(a, Int)]
 encode l = [(head i, length i) | i <- group l]
 
 lf :: Integer -> Integer
-lf 1 = error "Numbers lesser than 2 not allowed"
+lf 1 = error "Numbers < 2 not allowed"
 lf n
     | n `mod` 2 == 0 = 2
     | otherwise      = head . filter (\i -> n `mod` i == 0) $ [3,5..]
