@@ -12,4 +12,5 @@ scanChunks n (x:xs)
     | x == [4,4,4,4] = n
     | otherwise      = scanChunks (n+length x) xs
 
+main :: IO ()
 main = print . scanChunks 647 . group . map ndf $ [647..]
