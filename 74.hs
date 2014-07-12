@@ -3,10 +3,7 @@ module Main
 
 import Data.Char
 import Data.Function.Memoize
-
-factorial :: Int -> Int
-factorial 0 = 1
-factorial n = n * factorial (n-1)
+import Utils
 
 factorialSum :: Int -> Int
 factorialSum = sum . map (factorial . digitToInt) . show
@@ -19,7 +16,7 @@ chainLength' n = cl n [n]
             | otherwise     = cl fs (fs : acc)
                 where fs = factorialSum n
 
-chainLength = memoize chainLength'
+chainLength = chainLength'
 
 main :: IO ()
 main = print . length . filter (==60) . map chainLength $ [1..1000000]

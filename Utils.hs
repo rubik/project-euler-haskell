@@ -27,3 +27,7 @@ divisors :: Integer -> [Integer]
 divisors n = concatMap (\x -> [x, n `div` x]) .
              filter (\x -> n `mod` x == 0) .
              takeWhile (\x -> x*x <= n) $ [1..]
+
+factorial :: Int -> Int
+factorial 0 = 1
+factorial n = n * factorial (n-1)
