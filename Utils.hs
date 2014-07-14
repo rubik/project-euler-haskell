@@ -20,16 +20,23 @@ factors 1 = []
 factors n = let l = lf n
              in l : factors (n `div` l)
 
-factors' :: Integer -> [(Integer, Int)]
-factors' = encode . factors
+factors' :: Integer -> [[Integer]]
+factors' = group . factors
+
+factors'' :: Integer -> [(Integer, Int)]
+factors'' = encode . factors
 
 ndivisors :: Integer -> Int
-ndivisors = product . map ((+1) . snd) . factors'
+ndivisors = product . map ((+1) . snd) . factors''
 
 divisors :: Integer -> [Integer]
 divisors n = concatMap (\x -> [x, n `div` x]) .
              filter (\x -> n `mod` x == 0) .
              takeWhile (\x -> x*x <= n) $ [1..]
+
+sdivisors :: Integer -> Integer
+sdivisors n = product [(p * product g - 1) `div` (p - 1) | g <- factors' n,
+                       let p = head g] - n
 
 primes :: [Integer]
 primes = 2 : filter ((==1) . length . factors) [3,5..]
@@ -41,11 +48,11 @@ factorial n = n * factorial (n-1)
 totient :: Integer -> Integer
 totient n = (m*) . product . map ((\p -> p-1) . fst) $ f
     where
-        f = factors' n
+        f = factors'' n
         m = product . map (\(p,e) -> p^(e-1)) $ f
 
 -- Using Arrows
 {-totient n = uncurryN div . (num &&& product) $ f
     where
-        f = map fst . factors' $ n
+        f = map fst . factors'' $ n
         num = (n*) . product . map (\p -> p-1)-}
