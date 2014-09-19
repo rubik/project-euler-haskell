@@ -7,8 +7,8 @@ encode :: (Eq a) => [a] -> [(a, Int)]
 encode l = [(head i, length i) | i <- group l]
 
 lf :: Integer -> Integer
-lf 1 = error "Numbers < 2 not allowed"
 lf n
+    | n < 2          = error "Numbers < 2 not allowed"
     | n `mod` 2 == 0 = 2
     | otherwise      = if null a then n else head a
         where
@@ -34,6 +34,11 @@ divisors n = concatMap (\x -> [x, n `div` x]) .
              filter (\x -> n `mod` x == 0) .
              takeWhile (\x -> x*x <= n) $ [1..]
 
+divisorPairs :: Integer -> [(Integer, Integer)]
+divisorPairs n = map (\x -> (x, n `div` x)) .
+                 filter (\x -> n `mod` x == 0) .
+                 takeWhile (\x -> x*x <= n) $ [1..]
+
 sdivisors :: Integer -> Integer
 sdivisors n = product [(p * product g - 1) `div` (p - 1) | g <- factors' n,
                        let p = head g] - n
@@ -46,7 +51,7 @@ factorial 0 = 1
 factorial n = n * factorial (n-1)
 
 totient :: Integer -> Integer
-totient n = (m*) . product . map ((\p -> p-1) . fst) $ f
+totient n = (m*) . product . map (pred . fst) $ f
     where
         f = factors'' n
         m = product . map (\(p,e) -> p^(e-1)) $ f
