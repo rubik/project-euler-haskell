@@ -1,7 +1,7 @@
 module Main
     where
 
-import Data.List
+import Data.List (group, sort)
 
 main :: IO ()
 main = print . head . filter cand $ [99999,100008..]
