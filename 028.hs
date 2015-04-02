@@ -1,9 +1,9 @@
 module Main
     where
 
-ring :: Int -> [Int]
-ring n = [l, l + 2*n, l + 4*n, l + 6*n]
-    where l = 4*n^2 - 2*n + 1
+ring :: Int -> Int
+ring 0 = 1
+ring n = 16*n^2 + 4*n + 4
 
 main :: IO ()
-main = print . (1+) . sum . concatMap ring $ [1..500]
+main = print . sum . map ring $ [0..500]
